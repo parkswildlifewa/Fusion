@@ -32,16 +32,16 @@ var MapsLib = {
   //example: locationColumn:     "'my location'",
  
   locationColumn:	"Longitude",
-  activeColumn:     	"Active",
+  activeColumn:     "Active",
   geometryColumn:	"Geometry",
   groupColumn:     	"GroupTYPE",
   map_centroid:	new google.maps.LatLng(-31.9528536, 115.8573389), //center that your map defaults to
   locationScope:	"perth",      //geographical area appended to all address searches
-  recordName:	"result",       //for showing number of results
+  recordName:		"result",       //for showing number of results
   recordNamePlural:	"results",
-  searchRadius:       8050,            //in meters ~ 1/2 mile
-  defaultZoom:        11,             //zoom level when map is loaded (bigger is more zoomed in)
-  addrMarkerImage:    '/apps/fusion/images/user-location-red.png',
+  searchRadius:		8050,            //in meters ~ 1/2 mile
+  defaultZoom:		11,             //zoom level when map is loaded (bigger is more zoomed in)
+  addrMarkerImage:	"https://www.dpaw.wa.gov.au/apps/fusion/images/user-location-red.png",
   currentPinpoint:    null,
 
   initialize: function() {
@@ -351,7 +351,7 @@ var infoWindow = new google.maps.InfoWindow();
 
 /* Add list results */
 getList: function(whereClause) {
-  var selectColumns = "Organisation, SiteNAME, Contact, Phone, Email, Website, About";
+  var selectColumns = "Organisation, SiteNAME, Contact, Phone, Email, Website, Facebook, About";
   MapsLib.query(selectColumns, whereClause, "MapsLib.displayList");
 },
 
@@ -373,7 +373,7 @@ displayList: function(json) {
   }
   else {
     // added check to ensure all fields have been defined
-    for (var row in data) if(data[row][0] !== undefined && data[row][1] !== undefined && data[row][2] !== undefined && data[row][3] !== undefined && data[row][4] !== undefined && data[row][5] !== undefined) {
+    for (var row in data) if(data[row][0] !== undefined && data[row][1] !== undefined && data[row][2] !== undefined && data[row][3] !== undefined && data[row][4] !== undefined && data[row][5] !== undefined && data[row][6] !== undefined && data[row][7] !== undefined) {
       template = "\
         <li class='list-group-item'>\
 	     <strong>" + data[row][0] + "</strong>\
@@ -387,9 +387,11 @@ displayList: function(json) {
             <br />\
  	     <strong><abbr title='Email'>E</abbr>:</strong> <a href='mailto:" + data[row][4] + " '>" + data[row][4] + "</a>\
             <br />\
-            <strong><abbr title='Website'>W</abbr>:</strong> <a href='" + data[row][5] + " ' target='_blank' rel='external'>" + data[row][5] + "</a>\
+			  <strong><abbr title='Website'>W</abbr>:</strong> <a href='" + data[row][5] + " ' target='_blank' rel='external'>" + data[row][5] + "</a>\
 	     <br />\
-            <strong>About:</strong> " + data[row][6] + "\
+            <strong><abbr title='Facebook'>F</abbr>:</strong> <a href='" + data[row][6] + " ' target='_blank' rel='external'>" + data[row][6] + "</a>\
+	     <br />\
+            <strong>About:</strong> " + data[row][7] + "\
             <br />\
             </div></li>"
       results.append(template);
